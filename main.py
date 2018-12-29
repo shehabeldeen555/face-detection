@@ -10,6 +10,7 @@ face_cascade = cv.CascadeClassifier("haarcascade_frontalface_default.xml")
 cap = cv.VideoCapture(0)
 while 1:
     ret, img = cap.read()
+    img = cv.flip(img, 1)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
@@ -25,7 +26,6 @@ while 1:
         name = names[np.argmax(model.predict(face_to_predict))]
         cv.putText(img, name, (x, y), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0, 125, 255), 2, cv.LINE_AA)
 
-    # img = cv.flip(img, 1)
     cv.imshow('img', img)
     k = cv.waitKey(30) & 0xff
     if k == 27:
